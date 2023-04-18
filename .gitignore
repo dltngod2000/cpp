@@ -19,3 +19,4 @@
 #doc/**/*.pdf
 
 .vscode/
+.DS_Store
