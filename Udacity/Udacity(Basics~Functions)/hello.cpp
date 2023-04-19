@@ -10,6 +10,7 @@ int main()
               << "test"
               << "\n"
               << variableName << "\n";
+
     std::cout << "int size = " << sizeof(variableName) << std::endl;
 
     /*const 상수는 변경불가*/

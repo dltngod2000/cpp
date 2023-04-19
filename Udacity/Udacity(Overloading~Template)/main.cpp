@@ -10,3 +10,4 @@ int main()
     cout << "\ns2 dimensions are: " << s2.getWidth() << "," << s2.getLength();
     return 0;
 }
+// teset
