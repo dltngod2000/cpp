@@ -16,6 +16,7 @@
 
 출력
 최소 몇 번 만에 빨간 구슬을 구멍을 통해 빼낼 수 있는지 출력한다. 만약, 10번 이하로 움직여서 빨간 구슬을 구멍을 통해 빼낼 수 없으면 -1을 출력한다.*/
+
 #include <iostream>
 #include <string>
 
@@ -26,7 +27,94 @@
 
 using namespace std;
 
-void move(int way)
+int search(int way, marble R, marble B);
+class marble
+{
+private:
+    char color;
+    int x, y;
+
+public:
+    marble(char cIn);
+    char getColor();
+    int getX();
+    int getY();
+    void setX(int xIn);
+    void setY(int yIn);
+    void move(int way);
+};
+
+int search(int way, marble R, marble B)
+{
+    switch (way)
+    {
+    case EAST:
+        if (R.getX() <= B.getX())
+        {
+            R.move(EAST);
+            B.move(EAST);
+        }
+        break;
+    case WEST:
+        if (R.getX() <= B.getX())
+        {
+            B.move(WEST);
+            R.move(WEST);
+        }
+        break;
+    case SOUTH:
+        if (R.getY() <= B.getY())
+        {
+            R.move(SOUTH);
+            B.move(SOUTH);
+        }
+        break;
+    case NORTH:
+        if (R.getY() <= B.getY())
+        {
+            B.move(NORTH);
+            R.move(NORTH);
+        }
+        break;
+
+    default:
+        break;
+    }
+
+    while (true)
+    {
+        search(EAST, R, B);
+        search(WEST, R, B);
+        search(SOUTH, R, B);
+        search(NORTH, R, B);
+    }
+}
+marble::marble(char cIn)
+{
+    color = cIn;
+}
+char marble::getColor()
+{
+    return color;
+}
+int marble::getX()
+{
+    return x;
+}
+int marble::getY()
+{
+    return y;
+}
+void marble::setX(int xIn)
+{
+    this->x = xIn;
+}
+void marble::setY(int yIn)
+{
+    this->y = yIn;
+}
+
+void marble::move(int way)
 {
     switch (way)
     {
@@ -46,14 +134,17 @@ void move(int way)
     default:
         break;
     }
-};
-
+}
 int main()
 {
     std::freopen("input.txt", "r", stdin);
-    int N, M, rx, ry, bx, by;
+    int N, M;
     cin >> N >> M;
     char array[M][N];
+
+    marble RED('R');
+    marble BLUE('B');
+
     for (int i = 0; i < M; i++)
     {
         for (int j = 0; j < N; j++)
@@ -62,23 +153,18 @@ int main()
             cout << array[i][j];
             if (array[i][j] == 'R')
             {
-                rx = i;
-                ry = j;
+                RED.setX(j);
+                RED.setY(i);
             }
             else if (array[i][j] == 'B')
             {
-                bx = i;
-                by = j;
+                BLUE.setX(j);
+                BLUE.setY(i);
             }
         }
         cout << "\n";
     }
-
-    cout << "R(" << rx << ", " << ry << ")\n"
-         << "B(" << bx << ", " << by << ")\n";
-
-    while (true)
-    {
-    }
+    cout << "RED(" << RED.getX() << ", " << RED.getY() << ")\n"
+         << "BLUE(" << BLUE.getX() << ", " << BLUE.getY() << ")\n";
     return 0;
 }
